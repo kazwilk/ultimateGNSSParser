@@ -90,7 +90,7 @@ void loop1() { // The DEMO of ultimateGNSSParser library
   double velocity = all_GNSS_data->nautical_speed*1.852;
   sprintf(double_string,"https://www.google.com/maps?q=%0.5lf%c,%0.5lf%c&v=%0.1lf,a=%0.0lf",all_GNSS_data->lat, all_GNSS_data->lat_dir, all_GNSS_data->lon, all_GNSS_data->lon_dir,velocity,all_GNSS_data->alt);
   //sprintf(double_string,"{\"p\":\"%0.5lf%c,%0.5lf%c\",\"v\":\"%0.1lf\",\"a\":\"%0.0lf\",\"t\":\"%d:%02d:%02d\"}",all_GNSS_data->lat, all_GNSS_data->lat_dir, all_GNSS_data->lon, all_GNSS_data->lon_dir,velocity,all_GNSS_data->alt,all_GNSS_data->UTC_H,all_GNSS_data->UTC_M,all_GNSS_data->UTC_S);
-  Serial.print("LoRa (");
+  Serial.print("Example message (");
   Serial.print(strlen(double_string));
   Serial.print("): ");
   Serial.println(double_string);
