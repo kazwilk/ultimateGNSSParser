@@ -102,8 +102,8 @@ void serial_port_monitor (int mode) {
           continue;
           fprintf(stderr, "\n");
         }
-        result = (tp_now.tv_sec - tp_old.tv_sec) * 1e3 + (tp_now.tv_nsec - tp_old.tv_nsec) / 1e6; // time in miliseconds
-        fprintf(stderr, " received %8.3lf miliseconds since previous one\n", result);
+        result = (tp_now.tv_sec - tp_old.tv_sec) * 1e3 + (tp_now.tv_nsec - tp_old.tv_nsec) / 1e6; // time in milliseconds
+        fprintf(stderr, " received %8.3lf milliseconds since previous one\n", result);
         memcpy(&tp_old, &tp_now, sizeof (struct timespec));
       }
     } while (1);
