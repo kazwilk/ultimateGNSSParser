@@ -1,5 +1,5 @@
 /*
-  This file is part of the ultimateGNSSParser library.
+  This file is a part of the ultimateGNSSParser library.
   Copyright (c) 2024 Kazimierz Wilk. All rights reserved.
 
   This library is free software; you can redistribute it and/or
@@ -76,9 +76,9 @@
 inline void printPreciselyDouble(double paValue) {
 // The Latitude and Longitude are given with the precision of 0.00001 minutes.
 // This is the 0.0000001(6) of degrees, so we have to print the position with 8 digits of fraction,
-// but in RTK mode it's very well to turn two extra digits for better angle precision.
+// but in RTK mode it's good to turn on two extra digits for better angle precision.
 // The u-blox RTK module ZED-F9P allows to do it with CFG_NMEA_HIGHPREC,
-// That's the reason of printing 10 digits of the fraction
+// That's the reason for printing 10 digits of the fraction
 // In that case the NMEA messages give the angles with precision of 0.0000001 minutes.
 // This is the 0.000000001(6) of degrees.
 // Note that the precision can be reached only on platforms with 8 bytes size of the double type.
@@ -102,9 +102,9 @@ inline void printDouble(double paValue) {
 }
 
 
-#define PRN_SATS_MAX 6  // we have 6 GNSS constellations (GPS, GLONASS, Galileo, BeiDou, QZSS, NaviIC)
+#define PRN_SATS_MAX 6  // we have 6 GNSS constellations (GPS, GLONASS, Galileo, BeiDou, QZSS, NavIC)
 
-const uint8_t MAXMESSAGELENGTH   = 100;  // Maximum sentence length is limited to 82 characters according to the NMEA restrictions, but sometimes are longer
+const uint8_t MAXMESSAGELENGTH   = 100;  // Maximum sentence length is limited to 82 characters according to the NMEA restrictions, but sometimes they're longer
 const uint8_t MAXFIELDSINMESSAGE = 30;
 
 struct NMEA_fields {
@@ -228,7 +228,7 @@ struct GNSS_data {
  ***************************************************************************************************************************************************/
 
 
-// some modules (e.g. u-blox MAX-M10S or u-blox ZED-F9P) groups GSV messages by Signal ID (it corresponds to the frequency bands), so we have to have four groups for GPS, four groups for Galileo, etc.
+// some modules (e.g. u-blox MAX-M10S or u-blox ZED-F9P) group GSV messages by Signal ID (it corresponds to the frequency bands), so we need four groups for GPS, four groups for Galileo, etc.
 #define MAXGSVSYSTEMSTORAGE 16
 
 struct GSV_Sat_data {
@@ -340,10 +340,10 @@ public:
   
   // the data processing customization methods:
   // this method sets the time to estimate if the NMEA message belongs to the same time stamp messages pack or different time stamp messages pack
-  // use them very carefully, the time shall be as small as possible to receive all NMEA messages correctly
-  // the given value is equivalent of miliseconds
+  // use them very carefully, the time shall be as short as possible to receive all NMEA messages correctly
+  // the given value is the equivalent of milliseconds
   //
-  // if the value is too small, the effect will be to collect only fragments of packages with the same timestamp using the collectData() function
+  // if the value is too small, it may result in collecting only fragments of packages with the same timestamp using the collectData() function
   // if the value is too big, some data may be lost
   // the default values have been selected experimentally and should be satisfactory for most applications,
   // but don't hesitate to experiment on your own

@@ -1,5 +1,5 @@
 /*
-  This file is part of the ultimateGNSSParser library.
+  This file is a part of the ultimateGNSSParser library.
   Copyright (c) 2024 Kazimierz Wilk. All rights reserved.
 
   This library is free software; you can redistribute it and/or
@@ -101,7 +101,7 @@ inline void GNSSCollector::parseTime(const char *paSlice, uint8_t &paHour, uint8
     // be sure you give the correct NMEA time format to this function
     paFraction = atoi(strchr(paSlice, '.') + 1);
   }
-  // paFraction = (uint16_t) ((paSlice - ((double)((uint32_t)paSlice)))*1000); // this doesnt works due to rounding the last digit
+  // paFraction = (uint16_t) ((paSlice - ((double)((uint32_t)paSlice)))*1000); // this doesn't work due to rounding the last digit
 }
 
 /***************************************************************************************************************************************************
@@ -144,7 +144,7 @@ GNSSCollector::~GNSSCollector(void) {
 /***************************************************************************************************************************************************
  ***************************************************************************************************************************************************
  ***************************************************************************************************************************************************
- **************** the method sets the time break period for estimation the bunch of messages emited in single timestamp  ***************************
+ **************** the method sets the time break period for estimating the bunch of messages emited in single timestamp  ***************************
  ***************************************************************************************************************************************************
  ***************************************************************************************************************************************************
  ***************************************************************************************************************************************************/
@@ -241,7 +241,7 @@ inline void GNSSCollector::printTalkerName (const char *paTalker, bool paAlign) 
                        {"GQ","   QZSS"}, /* QZSS (Quasi-Zenith Satellite System), Japan */
                        {"GI","  NavIC"}, /* Indian Regional Navigation Satellite System (IRNSS) */
                        {"PQ","QZSS-QQ"}, /* QZSS (Quasi-Zenith Satellite System), Japan */  /* QZSS (Quectel Quirk) */
-                       {"GN","   GNSS"} }; /* Multi constellation - has to be at the end of table due to presentation layer */
+                       {"GN","   GNSS"} }; /* Multi constellation - has to be at the end of the table due to presentation layer */
   
   uint8_t loTindex;
   const uint8_t loTalkersNumber = sizeof(talkerNames)/sizeof(talkerNames[0]);
@@ -567,7 +567,7 @@ int8_t GNSSCollector::GSV_parser(const struct NMEA_fields  *paSlices) {
   }
   
   if ((MAXGSVSYSTEMSTORAGE) == this->atGSVData->recSystems) {
-    SETCOLORRED DBG("The data storage space for GSV information is full. Can not save this one and subsequent messages\r\n"); NOCOLOR
+    SETCOLORRED DBG("The data storage space for GSV information is full. Cannot save this one and subsequent messages\r\n"); NOCOLOR
     return(-2);
   }
   
@@ -810,7 +810,7 @@ int8_t GNSSCollector::GSA_parser(const struct NMEA_fields *paSlices) {
     return (-1);
   }
   
-  if ((18 != paSlices->cnt) && (19 != paSlices->cnt)) { // sometime system ID is not present
+  if ((18 != paSlices->cnt) && (19 != paSlices->cnt)) { // sometimes system ID is not present
     DBG("$__GSA message shall consists 18 (or +1 system ID) fields, but there are recognized the ");
     DBGT(paSlices->cnt, DEC);DBG("\r\n");
     return (-1);
@@ -1078,7 +1078,7 @@ int8_t GNSSCollector::collectData(bool paShowReceivedMessage = false, bool paSho
     
     if (((int8_t)0) == (avl_result = avl_callback())) {
       
-      // we are in the break between packs of messages
+      // we are in the break between the packs of messages
       
       if (!loSequenceStarted) { // Now we will start collecting data
         if (paShowReceivedMessage) {
@@ -1095,7 +1095,7 @@ int8_t GNSSCollector::collectData(bool paShowReceivedMessage = false, bool paSho
       DBG("collectData timeout\r\n");
       return (-6);
     } else {
-      ; // the subsequent message but not the first in current pack of messages
+      ; // the subsequent message but not the first one in current pack of messages
     }
     
   } // while ! loSequenceCompleted
@@ -1125,7 +1125,7 @@ int8_t GNSSCollector::check_and_slice_NMEA_message(const char *paSingleLine, str
   }
   
   if (NULL == paSlices) {
-    SETCOLORRED DBG("There is not given the memory area for NMEA message fields storage\r\n"); NOCOLOR
+    SETCOLORRED DBG("The memory area for NMEA message fields storage is not given.\r\n"); NOCOLOR
     return (-1);
   }
   
@@ -1239,7 +1239,7 @@ int8_t GNSSCollector::check_and_slice_NMEA_message(const char *paSingleLine, str
  ***************************************************************************************************************************************************
  ***************************************************************************************************************************************************
  ************************************** this function adds the correct "*<CHckSum>\r\n" to the given NMEA message string ***************************
- **************************** there has to be allocated the RAM space for additional 5 bytes (this function doesn't check it !!!) ******************
+ **************************** there has to be allocated RAM space for additional 5 bytes (this function doesn't check it !!!) **********************
  ***************************************************************************************************************************************************
  ***************************************************************************************************************************************************/
 
