@@ -50,7 +50,7 @@
 #define DBGV(msg)   fprintf(stderr, "%s", msg);
 #define DBGC(msg)   fprintf(stderr, "%c", msg);
 #define DEC "%d"
-#define HEX "%x"
+#define HEX "%X"
 #define DBGT(msg, TYPE)  fprintf(stderr, TYPE, msg);
 
 

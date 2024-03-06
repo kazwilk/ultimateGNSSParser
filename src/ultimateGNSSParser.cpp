@@ -87,6 +87,8 @@ inline double GNSSCollector::convertAngle(const char *paNMEA_AngleFormat) {
  ***************************************************************************************************************************************************/
 
 inline void GNSSCollector::parseTime(const char *paSlice, uint8_t &paHour, uint8_t &paMinutes, uint8_t &paSeconds, uint16_t &paFraction) {
+  const char *loFractPtr = strchr(paSlice, '.') + 1;
+  
   if (NULL == paSlice) {
     DBG("parseTime: the given slice is NULL\r\n");
     return;
@@ -99,7 +101,12 @@ inline void GNSSCollector::parseTime(const char *paSlice, uint8_t &paHour, uint8
     paFraction = 0;
   } else {
     // be sure you give the correct NMEA time format to this function
-    paFraction = atoi(strchr(paSlice, '.') + 1);
+    /* sometimes the fraction of seconds is given with only two digits (e.g. UM980)
+     * so we make sure that the number is in milliseconds: */
+    paFraction = atoi(loFractPtr);
+    if (3 > strlen (loFractPtr)) paFraction *= 10;
+    if (2 > strlen (loFractPtr)) paFraction *= 10;
+    // TODO - check if the fraction is more accurate than 1ms in the string
   }
   // paFraction = (uint16_t) ((paSlice - ((double)((uint32_t)paSlice)))*1000); // this doesn't work due to rounding the last digit
 }
@@ -311,7 +318,7 @@ void GNSSCollector::printGSVData(bool paShowDebugInfo = false) {
         NOCOLOR
       }
       
-      DBG("SignalID "); if (255 != atGSVData->system[s].GSV[m].signalID) { SETCOLORGREEN DBGT(atGSVData->system[s].GSV[m].signalID,DEC); NOCOLOR} else {SETCOLORRED DBG(" not present"); NOCOLOR}
+      DBG("SignalID "); if (255 != atGSVData->system[s].GSV[m].signalID) { SETCOLORGREEN DBGT(atGSVData->system[s].GSV[m].signalID,HEX); NOCOLOR} else {SETCOLORRED DBG(" not present"); NOCOLOR}
       DBG("\r\n");
     }
     DBG("--------------------------------------------------\r\n");
@@ -611,7 +618,7 @@ int8_t GNSSCollector::GSV_parser(const struct NMEA_fields  *paSlices) {
   }
   
   if (NMEA_ver411) {
-    GSV_CURR_SYS.GSV[GSV_CURR_SYS.msgs].signalID = atoi(GNSSCollector::get_field(paSlices, 4+(4*i)));
+    GSV_CURR_SYS.GSV[GSV_CURR_SYS.msgs].signalID = (uint8_t) strtol(GNSSCollector::get_field(paSlices, 4+(4*i)), NULL, 16);
   } else {
     GSV_CURR_SYS.GSV[GSV_CURR_SYS.msgs].signalID = -1;
   }
