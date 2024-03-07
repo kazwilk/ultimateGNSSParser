@@ -304,6 +304,7 @@ private:
   
   // extra tools:
   static inline void printTalkerName (const char *paTalker, bool paAlign);
+  static inline uint8_t getSystemIDByTalker(const char *paTalker);
 
 public:
   // constructor/destructor:
@@ -424,6 +425,25 @@ public:
 // then you can put the message to the receiver to change some settings on them
 int8_t completeTheNMEAMessage(char *paMessage);
 
+  const struct talkerID_Names {
+    const char talker[3];
+    const char name[8];
+    const uint8_t systemID;
+  } talkerNames [] = { {"??","    ???", 0}, /* some unrecognized message (e.g. Teseo-LIV3F has the $PSTMCPU message)*/
+                       {"GP","    GPS", 1}, /* USA - Global Positioning System */
+                       {"GL","GLONASS", 2}, /* Ru - Глобальная навигационная спутниковая система */
+                       {"GA","Galileo", 3}, /* EU system - more precise than GLONASS or GPS */
+                       {"BD"," BeiDou", 4}, /* BeiDou (BDS); Chinese: 北斗卫星导航系统; pinyin: Běidǒu Wèixīng Dǎoháng Xìtǒng */
+                       {"GB"," BeiDou", 4}, /* BeiDou (BDS); Chinese: 北斗卫星导航系统; pinyin: Běidǒu Wèixīng Dǎoháng Xìtǒng */
+                       {"QZ","   QZSS", 5}, /* QZSS (Quasi-Zenith Satellite System), Japan */ /* QZSS regional GPS augmentation system (Japan) */
+                       {"GQ","   QZSS", 5}, /* QZSS (Quasi-Zenith Satellite System), Japan */
+                       {"GI","  NavIC", 6}, /* Indian Regional Navigation Satellite System (IRNSS) */
+                       {"PQ","QZSS-QQ", 5}, /* QZSS (Quasi-Zenith Satellite System), Japan */  /* QZSS (Quectel Quirk) */
+                       {"GN","   GNSS", 0} }; /* Multi constellation - has to be at the end of the table due to presentation layer */
 
+/* there are 6 constellations: GPS, GLONASS, Galileo, BeiDou, QZSS, NavIC */
+#define MAX_SYSTEM_ID 6
+
+extern const char *GNSSsignalIDNames[MAX_SYSTEM_ID + 1][16];
 
 #endif

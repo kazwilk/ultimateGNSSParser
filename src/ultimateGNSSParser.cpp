@@ -273,6 +273,28 @@ inline void GNSSCollector::printTalkerName (const char *paTalker, bool paAlign) 
   DBGV(loTalkerFound);
 }
 
+
+
+inline uint8_t GNSSCollector::getSystemIDByTalker(const char *paTalker) {
+  
+  uint8_t loSindex;
+  const uint8_t loTalkersNumber = sizeof(talkerNames)/sizeof(talkerNames[0]);
+  uint8_t loSystemID = 0;
+  
+  for (loSindex = 0; loSindex < loTalkersNumber; loSindex++ ) {
+    if (! strncmp(talkerNames[loSindex].talker, paTalker, 2)) {
+      loSystemID = talkerNames[loSindex].systemID;
+      break;
+    }
+  }
+  
+  if (loTalkersNumber == loSindex) {
+    loSystemID = talkerNames[0].systemID;
+  }
+  
+  return (loSystemID);
+}
+
 /***************************************************************************************************************************************************
  ***************************************************************************************************************************************************
  ***************************************************************************************************************************************************
@@ -281,8 +303,21 @@ inline void GNSSCollector::printTalkerName (const char *paTalker, bool paAlign) 
  ***************************************************************************************************************************************************
  ***************************************************************************************************************************************************/
 
+/*    0             1            2            3            4            5            6           7            8            9            A            B             C            D           E            F    */
+const char *GNSSsignalIDNames[MAX_SYSTEM_ID + 1][16] = {
+  {"Undefined",   "Undefined","Undefined", "Undefined", "Undefined",  "Undefined","Undefined", "Undefined", "Undefined", "Undefined", "Undefined", "Undefined", "Undefined", "Undefined", "Undefined", "Undefined"},  // Undefined
+  {"All signals", "L1 C/A",   "L1 P(Y)"  ,   "L1 M",     "L2 P(Y)",    "L2C-M",    "L2C-L",      "L5-I",      "L5-Q",    "Reserved",  "Reserved",  "Reserved",   "Reserved", "Reserved",  "Reserved",  "Reserved"},   // GPS
+  {"All signals", "L1 C/A",   "L1 P",       "L2 C/A",     "L2 P",     "Reserved", "Reserved",  "Reserved",  "Reserved",  "Reserved",  "Reserved",  "Reserved",   "Reserved", "Reserved",  "Reserved",  "Reserved"},   // GLONASS
+  {"All signals", "E5a",      "E5b",        "E5a+b",      "E6-A",      "E6-BC",     "L1-A",      "L1-BC",   "Reserved",  "Reserved",  "Reserved",  "Reserved",   "Reserved", "Reserved",  "Reserved",  "Reserved"},   // Galileo
+  {"All signals", "B1I",      "B1Q",         "B1C",       "B1A",       "B2-a",      "B2-b",     "B2 a+b",      "B3I",       "B3Q",       "B3A",       "B2I",       "B2Q"  ,  "Reserved",  "Reserved",  "Reserved"},   // BeiDou
+  {"All signals", "L1 C/A",   "L1C (D)",   "L1C (P)",     "LIS",      "L2C-M",     "L2C-L",      "L5-I",      "L5-Q",       "L6D",       "L6E",    "Reserved",   "Reserved", "Reserved",  "Reserved",  "Reserved"},   // QZSS
+  {"All signals", "L5-SPS",   "S-SPS",      "L5-RS",      "S-RS",     "L1-SPS",   "Reserved",  "Reserved",  "Reserved",  "Reserved",  "Reserved",  "Reserved",   "Reserved", "Reserved",  "Reserved",  "Reserved"}    // NavIC
+};
+
+
 void GNSSCollector::printGSVData(bool paShowDebugInfo = false) {
   uint8_t i,m,s; /* iterators: generic, message, system */
+  uint8_t loSystemID;
   
   if (NULL == this->atGSVData) {
     if (paShowDebugInfo) {
@@ -299,6 +334,9 @@ void GNSSCollector::printGSVData(bool paShowDebugInfo = false) {
     DBG("System No "); DBGT(s+1, DEC); DBG("\t");
     DBG ("talker is \""); DBGV(atGSVData->system[s].talker); DBG("\" ("); SETCOLORCYAN GNSSCollector::printTalkerName(atGSVData->system[s].talker,false); NOCOLOR DBG(")   ");
     DBG ("received messages: "); DBGT(atGSVData->system[s].msgs,DEC); DBG("\r\n");
+    
+    loSystemID = getSystemIDByTalker(atGSVData->system[s].talker);
+    
     for (m=0; m<9;m++) {
       if (0 == atGSVData->system[s].GSV[m].msgNo)
         continue;
@@ -318,7 +356,12 @@ void GNSSCollector::printGSVData(bool paShowDebugInfo = false) {
         NOCOLOR
       }
       
-      DBG("SignalID "); if (255 != atGSVData->system[s].GSV[m].signalID) { SETCOLORGREEN DBGT(atGSVData->system[s].GSV[m].signalID,HEX); NOCOLOR} else {SETCOLORRED DBG(" not present"); NOCOLOR}
+      DBG("SignalID "); if (255 != atGSVData->system[s].GSV[m].signalID) { SETCOLORGREEN 
+                                                                           DBGT(atGSVData->system[s].GSV[m].signalID,HEX); DBG("\t"); 
+                                                                           DBG(GNSSsignalIDNames[loSystemID][atGSVData->system[s].GSV[m].signalID]); 
+                                                                           NOCOLOR
+                                                                         } else {SETCOLORRED DBG(" not present"); NOCOLOR}
+
       DBG("\r\n");
     }
     DBG("--------------------------------------------------\r\n");
