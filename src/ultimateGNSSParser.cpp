@@ -235,21 +235,6 @@ int8_t GNSSCollector::parse_NMEA_fields_for_particular_message(const struct NMEA
 
 inline void GNSSCollector::printTalkerName (const char *paTalker, bool paAlign) {
   
-  const struct talkerID_Names {
-    const char talker[3];
-    const char name[8];
-  } talkerNames [] = { {"??","    ???"}, /* some unrecognized message (e.g. Teseo-LIV3F has the $PSTMCPU message)*/
-                       {"GP","    GPS"}, /* USA - Global Positioning System */
-                       {"GL","GLONASS"}, /* Ru - Глобальная навигационная спутниковая система */
-                       {"GA","Galileo"}, /* EU system - more precise than GLONASS or GPS */
-                       {"BD"," BeiDou"}, /* BeiDou (BDS); Chinese: 北斗卫星导航系统; pinyin: Běidǒu Wèixīng Dǎoháng Xìtǒng */
-                       {"GB"," BeiDou"}, /* BeiDou (BDS); Chinese: 北斗卫星导航系统; pinyin: Běidǒu Wèixīng Dǎoháng Xìtǒng */
-                       {"QZ","   QZSS"}, /* QZSS (Quasi-Zenith Satellite System), Japan */ /* QZSS regional GPS augmentation system (Japan) */
-                       {"GQ","   QZSS"}, /* QZSS (Quasi-Zenith Satellite System), Japan */
-                       {"GI","  NavIC"}, /* Indian Regional Navigation Satellite System (IRNSS) */
-                       {"PQ","QZSS-QQ"}, /* QZSS (Quasi-Zenith Satellite System), Japan */  /* QZSS (Quectel Quirk) */
-                       {"GN","   GNSS"} }; /* Multi constellation - has to be at the end of the table due to presentation layer */
-  
   uint8_t loTindex;
   const uint8_t loTalkersNumber = sizeof(talkerNames)/sizeof(talkerNames[0]);
   const char *loTalkerFound;
