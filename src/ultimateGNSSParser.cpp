@@ -440,8 +440,8 @@ void GNSSCollector::printGNSSData(bool paShowDebugInfo = false) {
      case '1': DBG(" - Single point fix"); break;
      case '2': DBG(" - Differential fix"); break;
      case '3': SETCOLORRED DBG(" - Not applicable"); NOCOLOR break;
-     case '4': DBG(" - RTK Fixed, ambiguity solution"); break;
-     case '5': DBG(" - RTK Floating, ambiguity solution"); break;
+     case '4': SETCOLORGREEN DBG(" - RTK Fixed, ambiguity solution"); NOCOLOR break;
+     case '5': SETCOLORYELLOW DBG(" - RTK Floating, ambiguity solution"); NOCOLOR break;
      case '6': DBG(" - Dead reckoning"); break;
      case '7': SETCOLORYELLOW DBG(" - Manual input mode (fixed position)"); NOCOLOR break;
      case '8': SETCOLORYELLOW DBG(" - Simulator mode"); NOCOLOR break;
