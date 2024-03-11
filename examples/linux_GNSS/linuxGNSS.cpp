@@ -342,7 +342,8 @@ int main (int argc, char *argv[]) {
     if (all_GNSS_data->msgs_rcvd[MSG_RMC] && all_GNSS_data->msgs_rcvd[MSG_GGA]) {
       fprintf(stderr, ('A' == all_GNSS_data->pos_status)?"\033[92mPosition is valid\033[39m\r\n":"\033[91mUnknown position\033[39m\r\n");
       double velocity = all_GNSS_data->nautical_speed*1.852;
-      sprintf(double_string,"https://www.google.com/maps?q=%0.5lf%c,%0.5lf%c&v=%0.1lf&a=%0.0lf",all_GNSS_data->lat, all_GNSS_data->lat_dir, all_GNSS_data->lon, all_GNSS_data->lon_dir,velocity,all_GNSS_data->alt);
+      sprintf(double_string,"https://www.google.com/maps?q=%0.11lf%c,%0.11lf%c",all_GNSS_data->lat, all_GNSS_data->lat_dir, all_GNSS_data->lon, all_GNSS_data->lon_dir);
+      //sprintf(double_string,"https://www.google.com/maps?q=%0.11lf%c,%0.11lf%c&v=%0.1lf&a=%0.0lf",all_GNSS_data->lat, all_GNSS_data->lat_dir, all_GNSS_data->lon, all_GNSS_data->lon_dir,velocity,all_GNSS_data->alt);
       //sprintf(double_string,"{\"p\":\"%0.5lf%c,%0.5lf%c\",\"v\":\"%0.1lf\",\"a\":\"%0.0lf\",\"t\":\"%d:%02d:%02d\"}",all_GNSS_data->lat, all_GNSS_data->lat_dir, all_GNSS_data->lon, all_GNSS_data->lon_dir,velocity,all_GNSS_data->alt,all_GNSS_data->UTC_H,all_GNSS_data->UTC_M,all_GNSS_data->UTC_S);
       fprintf(stderr, "Example message (");
       fprintf(stderr, "%ld", strlen(double_string));
