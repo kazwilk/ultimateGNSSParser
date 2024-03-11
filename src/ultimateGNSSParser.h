@@ -83,11 +83,13 @@ inline void printPreciselyDouble(double paValue) {
 // This is the 0.000000001(6) of degrees.
 // Note that the precision can be reached only on platforms with 8 bytes size of the double type.
 // The double type on Arduino UNO has size of 4 bytes.
+// Some receivers (e.g. Unicorecomm UM980 RTK with 8mm precision) prints the Latitude and Longitude
+// with the precision of 0.00000001 minutes, so that's the 0.0000000001(6) of degrees.
 
 #ifdef ARDUINO
-  DBGV(String(paValue, 10).c_str());
+  DBGV(String(paValue, 11).c_str());
 #elif __linux__
-  fprintf(stderr, "%.10lf", paValue);
+  fprintf(stderr, "%.11lf", paValue);
 #endif
   return;
 }
