@@ -330,7 +330,7 @@ void GNSSCollector::printGSVData(bool paShowDebugInfo = false) {
       DBG("sats in view: ");  SETCOLORBLUE DBGT(atGSVData->system[s].GSV[m].sats,DEC); NOCOLOR DBG("\r\n");
       SETCOLORBLUE DBG ("                        PRN   ");   DBG ("elev   ");   DBG ("azimuth   "); DBG ("SNR"); NOCOLOR DBG("\r\n");
       for (i=0;i<4;i++) {
-        if (0 == atGSVData->system[s].GSV[m].sat[i].prn)
+        if ( (0 == atGSVData->system[s].GSV[m].sat[i].prn) && (0 == atGSVData->system[s].GSV[m].sat[i].SNR) )
           continue;
         DBG ("\tSat No.: "); DBGT(i, DEC); DBG("      ");
         if ( 0 == atGSVData->system[s].GSV[m].sat[i].SNR) SETCOLORRED else SETCOLORGREEN
