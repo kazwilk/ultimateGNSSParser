@@ -106,7 +106,7 @@ inline void printDouble(double paValue) {
 
 #define PRN_SATS_MAX 6  // we have 6 GNSS constellations (GPS, GLONASS, Galileo, BeiDou, QZSS, NavIC)
 
-const uint8_t MAXMESSAGELENGTH   = 100;  // Maximum sentence length is limited to 82 characters according to the NMEA restrictions, but sometimes they're longer
+const uint8_t MAXMESSAGELENGTH   = 120;  // Maximum sentence length is limited to 82 characters according to the NMEA restrictions, but sometimes they're longer (e.g. PX1122R by SkyTraQ)
 const uint8_t MAXFIELDSINMESSAGE = 30;
 
 struct NMEA_fields {
