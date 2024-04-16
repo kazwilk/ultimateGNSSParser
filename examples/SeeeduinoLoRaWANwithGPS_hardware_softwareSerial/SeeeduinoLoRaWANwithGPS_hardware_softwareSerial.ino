@@ -64,6 +64,15 @@ void setup() {
 #endif
     Serial.begin(115200);                   // the Serial port of Arduino baud rate.
     digitalWrite(ATN,HIGH);                 // Power on GROVE connector
+
+    // Uncomment the lines below if you have the Seeeduino LoRaWAN with GPS chip onboard Quectel L70
+    // This command sets the Quectel L70 chip to print the GLL, RMC, VTG, GGA, GSA, GSV, GST and ZDA sentences.
+    // It is possible to enable the $GPGRS sentence too.
+    /*
+    char loMessage[100] = "$PMTK314,1,1,1,1,1,1,0,1,0,0,0,0,0,0,0,0,0,1,0";
+    completeTheNMEAMessage(loMessage);
+    Serial2.write(loMessage);
+    */
 }
 
 
