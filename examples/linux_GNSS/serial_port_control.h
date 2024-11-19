@@ -26,7 +26,7 @@
 
 /*========================================================================================================================*/
 
-unsigned int spc_parse_speed(const unsigned int paSpeed) {
+unsigned int spc_parse_speed(const speed_t paSpeed) {
   switch (paSpeed) {
     case 1200:
             fprintf(stderr, "The serial port bitrate is 1200 [bps]\r\n");
@@ -68,6 +68,22 @@ unsigned int spc_parse_speed(const unsigned int paSpeed) {
             fprintf(stderr, "The serial port bitrate is 230400 [bps]\r\n");
             return(B230400);
             break;
+    case 460800:
+            fprintf(stderr, "The serial port bitrate is 460800 [bps]\r\n");
+            return(B460800);
+            break;
+    case 500000:
+            fprintf(stderr, "The serial port bitrate is 500000 [bps]\r\n");
+            return(B500000);
+            break;
+    case 576000:
+            fprintf(stderr, "The serial port bitrate is 576000 [bps]\r\n");
+            return(B576000);
+            break;
+    case 921600:
+            fprintf(stderr, "The serial port bitrate is 921600 [bps]\r\n");
+            return(B921600);
+            break;
     default:
             fprintf(stderr, "The given bitrate %d is illegal, 9600 [bps] is set\r\n", paSpeed);
             return (B9600);
@@ -76,7 +92,7 @@ unsigned int spc_parse_speed(const unsigned int paSpeed) {
 
 /*========================================================================================================================*/
 
-int spc_set_interface_attribs (const int fd, const int paSpeed) {
+int spc_set_interface_attribs (const int fd, const speed_t paSpeed) {
   struct termios tty;
   char *error_str;
   
