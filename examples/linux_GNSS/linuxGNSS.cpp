@@ -169,6 +169,7 @@ int program_parameters_parser (const int argc, char * const argv[]) {
       case 's':
               if (NULL == optarg) {
                 fprintf(stderr, "The speed parameter needs the argument\r\n");
+                fprintf(stderr, "The accepted values are: 1200, 1800, 2400, 4800, 9600, 19200, 38400, 57600, 115200, 230400, 460800, 500000, 576000, 921600\r\n");
                 break;
               }
               serial_speed = atoi(optarg);
@@ -341,7 +342,7 @@ int main (int argc, char *argv[]) {
     
     if (all_GNSS_data->msgs_rcvd[MSG_RMC] && all_GNSS_data->msgs_rcvd[MSG_GGA]) {
       fprintf(stderr, ('A' == all_GNSS_data->pos_status)?"\033[92mPosition is valid\033[39m\r\n":"\033[91mUnknown position\033[39m\r\n");
-      double velocity = all_GNSS_data->nautical_speed*1.852;
+      //double velocity = all_GNSS_data->nautical_speed*1.852;
       sprintf(double_string,"https://www.google.com/maps?q=%0.11lf%c,%0.11lf%c",all_GNSS_data->lat, all_GNSS_data->lat_dir, all_GNSS_data->lon, all_GNSS_data->lon_dir);
       //sprintf(double_string,"https://www.google.com/maps?q=%0.11lf%c,%0.11lf%c&v=%0.1lf&a=%0.0lf",all_GNSS_data->lat, all_GNSS_data->lat_dir, all_GNSS_data->lon, all_GNSS_data->lon_dir,velocity,all_GNSS_data->alt);
       //sprintf(double_string,"{\"p\":\"%0.5lf%c,%0.5lf%c\",\"v\":\"%0.1lf\",\"a\":\"%0.0lf\",\"t\":\"%d:%02d:%02d\"}",all_GNSS_data->lat, all_GNSS_data->lat_dir, all_GNSS_data->lon, all_GNSS_data->lon_dir,velocity,all_GNSS_data->alt,all_GNSS_data->UTC_H,all_GNSS_data->UTC_M,all_GNSS_data->UTC_S);
